@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+    <title>Game, Day 8</title>
+    <style> body { margin: 0;}</style>
+</head>
+<body>
+    <canvas id="canv">
+    </canvas>
+
+    <script type="module">
+        /* Get the Scene Manager for the game */
+        import SceneManager from "./engine/scene-manager.js"
+
+        /* Get references to all the custom scenes from the game */
+        import FirstScene from "./game/scenes/first-scene.js"
+        import SecondScene from "./game/scenes/second-scene.js"
+
+        /* Get references to all custom prefabs from the game */
+        import BlueRectangle from "./game/prefabs/blue-rectangle.js"
+        import RedRectangle from "./game/prefabs/red-rectangle.js"
+        import GreenTriangle from "./game/prefabs/green-triangle.js"
+        import YellowCircle from "./game/prefabs/yellow-circle.js"
+
+        /* Get references to all the components. Eventually this will include engine and game-based components */
+        import DrawComponent from "./game/components/draw-component.js"
+        import MoveComponent from "./game/components/move-component.js"
+        import MoveUpComponent from "./game/components/move-up-component.js"
+        import MoveDownComponent from "./game/components/move-down-component.js"
+        import MoveLeftComponent from "./game/components/move-left-component.js"
+        import MoveRightComponent from "./game/components/move-right-component.js"
+        import ChangeSceneComponent from "./game/components/change-scene-component.js"
+        import DrawTriComponent from "./game/components/draw-tri-component.js"
+        import DrawCircComponent from "./game/components/draw-circle-component.js"
+
+        /* Import the scene object so we can call deserialize */
+        import Scene from "./engine/scene.js"
+
+        /* Setup our canvas */
+        let canvas = document.getElementById("canv");
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+        let ctx = canvas.getContext("2d");
+        
+        let allComponents = [MoveComponent, DrawComponent, ChangeSceneComponent, DrawTriComponent, DrawCircComponent, MoveUpComponent, MoveDownComponent, MoveLeftComponent, MoveRightComponent]  //Get all possible components in a list
+        let allPrefabs = [BlueRectangle, RedRectangle, GreenTriangle, YellowCircle];      //Get all possible prefabs in a list
+        
+        SceneManager.allComponents = allComponents;
+        SceneManager.allPrefabs = allPrefabs;
+
+        SceneManager.allScenes.push(FirstScene);
+        SceneManager.allScenes.push(SecondScene);
+        
+        SceneManager.changeScene("FirstScene");
+
+
+        /* Update and draw our game */
+        function gameLoop() {
+            clear(); 
+            SceneManager.currentScene.draw(ctx);
+            SceneManager.currentScene.update(); 
+        }
+
+        /* Erase what we had on the last frame */
+        function clear() { 
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvas.width, canvas.height); 
+        }
+
+        setInterval(gameLoop, 1000/144)
+    </script>
+</body>
+</html>
