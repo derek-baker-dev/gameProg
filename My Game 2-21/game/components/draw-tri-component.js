@@ -1,22 +1,19 @@
 import Component from "../../engine/component.js"
-class DrawTriComponent extends Component{
+class DrawTriComponent extends Component {
     static name = "DrawTriComponent"
-    constructor(gameObject, color, sideLength){
+    constructor(gameObject, color, sideLength = 100) {
         super(gameObject);
         this.color = color;
-        if (sideLength)
-            this.length = sideLength;
-        else 
-            this.length = 100;
+        this.length = sideLength;
     }
-    draw(ctx){
+    draw(ctx) {
         ctx.fillStyle = this.color;
-        let h = this.length * (Math.sqrt(3)/2);
+        let h = this.length * (Math.sqrt(3) / 2);
         ctx.save()
         ctx.translate(this.gameObject.x, this.gameObject.y);
         ctx.beginPath()
         ctx.moveTo(0, -h / 2);
-        ctx.lineTo( -this.length / 2, h / 2);
+        ctx.lineTo(-this.length / 2, h / 2);
         ctx.lineTo(this.length / 2, h / 2);
         ctx.lineTo(0, -h / 2);
         ctx.fill();

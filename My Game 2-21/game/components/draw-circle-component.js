@@ -1,13 +1,10 @@
 import Component from "../../engine/component.js"
 class DrawCircComponent extends Component{
     static name = "DrawCircComponent"
-    constructor(gameObject, color, radius){
+    constructor(gameObject, color, radius = 100){
         super(gameObject);
         this.color = color;
-        if (radius)
-            this.radius = radius;
-        else
-            this.radius = 100;
+        this.radius = radius;
     }
     draw(ctx){
         ctx.fillStyle = this.color;
